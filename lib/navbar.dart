@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:scanteen/Contractors/Add_item/add_item_form.dart';
+import 'package:scanteen/Contractors/c_FoodList/c_food.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({
@@ -23,13 +25,23 @@ class NavBar extends StatelessWidget {
             onTabChange(index);
             switch (index) {
               case 0:
-                Navigator.pushNamed(context, '/');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const c_food(),
+                  ),
+                );
                 break;
               case 1:
-                Navigator.pushNamed(context, '/add_item');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const add_item(),
+                  ),
+                );
                 break;
               case 2:
-               // Navigator.pushNamed(context, '/contact');
+                // Navigator.pushNamed(context, '/contact');
                 break;
             }
           },
@@ -38,8 +50,7 @@ class NavBar extends StatelessWidget {
           activeColor: Color(0XFF17181D),
           tabBackgroundColor: Color(0xFFFCD9B8),
           gap: 8,
-          padding:
-              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
           tabs: const [
             GButton(
               icon: Icons.home,
@@ -59,4 +70,3 @@ class NavBar extends StatelessWidget {
     );
   }
 }
-
