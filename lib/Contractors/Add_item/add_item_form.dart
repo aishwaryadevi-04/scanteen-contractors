@@ -4,7 +4,6 @@ import 'package:scanteen/Contractors/c_FoodList/c_food_list.dart';
 import 'package:scanteen/navbar.dart';
 import 'header.dart';
 
-
 class add_item extends StatefulWidget {
   //Form to add items
   const add_item({super.key});
@@ -179,7 +178,10 @@ class _add_itemState extends State<add_item> {
                 ElevatedButton(
                   onPressed: () => {
                     if (formKey.currentState!.validate())
-                      {_addFoodItem(), Navigator.pushNamed(context, '/')},
+                      {
+                        _addFoodItem(),
+                        Navigator.of(context).pushNamed('/'),
+                      }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFE09145),

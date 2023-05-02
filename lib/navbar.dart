@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:scanteen/Contractors/Add_item/add_item_form.dart';
-import 'package:scanteen/Contractors/c_FoodList/c_food.dart';
+
 
 class NavBar extends StatelessWidget {
   const NavBar({
@@ -25,20 +24,10 @@ class NavBar extends StatelessWidget {
             onTabChange(index);
             switch (index) {
               case 0:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const c_food(),
-                  ),
-                );
+                 Navigator.of(context).pushNamed('/');
                 break;
               case 1:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const add_item(),
-                  ),
-                );
+                Navigator.of(context).pushNamed('/add_item');
                 break;
               case 2:
                 // Navigator.pushNamed(context, '/contact');
