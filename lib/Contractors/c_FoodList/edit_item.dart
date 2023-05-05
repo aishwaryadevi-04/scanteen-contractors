@@ -1,29 +1,26 @@
-import 'dart:developer';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scanteen/Contractors/c_FoodList/c_food_list.dart';
 import 'package:scanteen/navbar.dart';
-import 'header.dart';
+import 'edit_header.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddItem extends StatefulWidget {
-  //Form to add items
-  const AddItem({super.key});
+class EditItem extends StatefulWidget {
+  Map<String, dynamic> data;
+
+  EditItem({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
 
   @override
-  State<AddItem> createState() => _AddItemState();
+  State<EditItem> createState() => _EditItemState();
 }
 
-class _AddItemState extends State<AddItem> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController foodNameController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
-  TextEditingController maxPriceController = TextEditingController();
-  TextEditingController imageController = TextEditingController();
-  int _selectedIndex = 1;
-
+class _EditItemState extends State<EditItem> {
+  int _selectedIndex = 0;
   void _onItemTapped(int index) {
     //Selected index in navbar
     setState(() {
@@ -31,39 +28,47 @@ class _AddItemState extends State<AddItem> {
     });
   }
 
-  void _addFoodItem() {
-    //Add food items to list
-    String foodNameValue = foodNameController.text;
-    int priceValue = int.tryParse(priceController.text) ?? 0;
-    int maxPriceValue = int.tryParse(maxPriceController.text) ?? 0;
-    setState(() {
-      Map<String, dynamic> foodItem = {
-        'f_name': foodNameValue,
-        'f_price': priceValue,
-        'f_image': image,
-        'f_maxPrice': maxPriceValue,
-      };
-      cFoodList.add(foodItem);
-      print('Added food item : $foodItem');
-    });
-  }
-
-  File? image;
-
   final ImagePicker picker = ImagePicker();
 
-  Future getImage(ImageSource source) async {
-    var img = await picker.pickImage(source: source);
-
-    setState(() {
-      image = File(img!.path);
-      String uri = image!.path.split('/').last;
-      imageController.text = Uri.decodeComponent(uri);
-    });
-  }
+  TextEditingController imageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> foodDetails = widget.data;
+    File? image = foodDetails['f_image'];
+    //to set initial values for image field when edit icon is pressed
+    if (image == null) {
+      //If no image is present set text as default image
+      imageController = TextEditingController(text: 'Default image');
+    } else {
+      //Decode the image path
+      String imagePath = image.path.split('/').last;
+      imageController.text = Uri.decodeComponent(imagePath);
+
+      imageController = TextEditingController(text: imageController.text);
+    }
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    TextEditingController foodNameController =
+        TextEditingController(text: foodDetails['f_name']);
+    TextEditingController priceController =
+        TextEditingController(text: foodDetails['f_price'].toString());
+    TextEditingController maxPriceController =
+        TextEditingController(text: foodDetails['f_maxPrice'].toString());
+
+    Future<void> getImage() async {//Get images from file
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        final image = File(pickedFile.path);
+
+        setState(() {
+          String uri = image.path.split('/').last;
+          imageController.text = Uri.decodeComponent(uri);
+          foodDetails['f_image'] =
+              image; // update the f_image field with the selected image path
+        });
+      }
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFF17181D),
       body: SingleChildScrollView(
@@ -166,7 +171,7 @@ class _AddItemState extends State<AddItem> {
                               bottom: 0,
                               child: GestureDetector(
                                 onTap: () {
-                                  getImage(ImageSource.gallery);
+                                  getImage();
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(12.0),
@@ -221,7 +226,13 @@ class _AddItemState extends State<AddItem> {
                   onPressed: () => {
                     if (formKey.currentState!.validate())
                       {
-                        _addFoodItem(),
+                        foodDetails['f_name'] = foodNameController.text,
+                        foodDetails['f_price'] =
+                            int.parse(priceController.text),
+                        foodDetails['f_maxPrice'] =
+                            int.parse(maxPriceController.text),
+                         foodDetails['f_image'] = image,
+                         print('Edited item details:$foodDetails'),
                         Navigator.of(context).pushNamed('/'),
                       }
                   },
@@ -232,7 +243,7 @@ class _AddItemState extends State<AddItem> {
                     ),
                     minimumSize: const Size(268, 65),
                   ),
-                  child: Text('Add item',
+                  child: Text('Update item',
                       style: GoogleFonts.inter(
                           textStyle: const TextStyle(
                             color: Color(0XFF17181D),

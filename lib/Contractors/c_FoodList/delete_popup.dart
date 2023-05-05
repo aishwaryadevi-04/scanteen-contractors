@@ -12,7 +12,7 @@ class _DeleteFoodState extends State<DeleteFood> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Color(0XFF2B2B2B),
+      backgroundColor:const  Color(0XFF2B2B2B),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
@@ -52,7 +52,7 @@ class _DeleteFoodState extends State<DeleteFood> {
                 thickness: 1.0,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

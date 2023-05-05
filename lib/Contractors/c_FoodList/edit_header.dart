@@ -16,7 +16,7 @@ class Header extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 110, 0, 0),
               child: Text(
-                'Add your new item',
+                'Edit item',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   textStyle: const TextStyle(
@@ -57,7 +57,7 @@ class Header extends StatelessWidget {
                     ),
                   ]),
             ),
-           const SizedBox(height: 61),
+            const SizedBox(height: 61),
       ],
     );
   }

@@ -4,7 +4,7 @@ import 'package:scanteen/route_generator.dart';
 
 void main() {
   runApp(const MaterialApp(
-    home:c_food(),
+    home:ContractorFood(),
     onGenerateRoute:RouteGenerator.generateRoute,
     debugShowCheckedModeBanner: false,
   ));
