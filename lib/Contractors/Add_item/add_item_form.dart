@@ -222,7 +222,7 @@ class _AddItemState extends State<AddItem> {
                     if (formKey.currentState!.validate())
                       {
                         _addFoodItem(),
-                        Navigator.of(context).pushNamed('/'),
+                        Navigator.of(context).pushReplacementNamed('/'),
                       }
                   },
                   style: ElevatedButton.styleFrom(

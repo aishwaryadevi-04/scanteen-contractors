@@ -233,7 +233,7 @@ class _EditItemState extends State<EditItem> {
                             int.parse(maxPriceController.text),
                          foodDetails['f_image'] = image,
                          print('Edited item details:$foodDetails'),
-                        Navigator.of(context).pushNamed('/'),
+                        Navigator.of(context).pushReplacementNamed('/'),
                       }
                   },
                   style: ElevatedButton.styleFrom(
