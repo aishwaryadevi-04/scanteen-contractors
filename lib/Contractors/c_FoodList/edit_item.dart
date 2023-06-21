@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:scanteen/Contractors/c_FoodList/c_api.dart';
 import 'package:scanteen/navbar.dart';
 import 'edit_header.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,10 +36,11 @@ class _EditItemState extends State<EditItem> {
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> foodDetails = widget.data;
+    print(foodDetails);
+
     File? image = foodDetails['f_image'];
     //to set initial values for image field when edit icon is pressed
     if (image == null) {
-      //If no image is present set text as default image
       imageController = TextEditingController(text: 'Default image');
     } else {
       //Decode the image path
@@ -49,13 +51,14 @@ class _EditItemState extends State<EditItem> {
     }
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     TextEditingController foodNameController =
-        TextEditingController(text: foodDetails['f_name']);
+        TextEditingController(text: foodDetails['name']);
     TextEditingController priceController =
-        TextEditingController(text: foodDetails['f_price'].toString());
+        TextEditingController(text: foodDetails['price'].toString());
     TextEditingController maxPriceController =
-        TextEditingController(text: foodDetails['f_maxPrice'].toString());
+        TextEditingController(text: foodDetails['threshold'].toString());
 
-    Future<void> getImage() async {//Get images from file
+    Future<void> getImage() async {
+      //Get images from file
       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         final image = File(pickedFile.path);
@@ -223,18 +226,18 @@ class _EditItemState extends State<EditItem> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () => {
-                    if (formKey.currentState!.validate())
-                      {
-                        foodDetails['f_name'] = foodNameController.text,
-                        foodDetails['f_price'] =
-                            int.parse(priceController.text),
-                        foodDetails['f_maxPrice'] =
-                            int.parse(maxPriceController.text),
-                         foodDetails['f_image'] = image,
-                         print('Edited item details:$foodDetails'),
-                        Navigator.of(context).pushReplacementNamed('/'),
-                      }
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      foodDetails['name'] = foodNameController.text;
+                      foodDetails['price'] =
+                          int.parse(priceController.text) ?? 0;
+                      foodDetails['threshold'] =
+                          int.parse(maxPriceController.text) ?? 0;
+                      foodDetails['f_image'] = image;
+                      await updateFood(foodDetails);
+
+                      Navigator.of(context).pushReplacementNamed('/');
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFE09145),

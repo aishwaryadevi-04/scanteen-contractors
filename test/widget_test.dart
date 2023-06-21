@@ -6,9 +6,12 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:scanteen/Contractors/c_FoodList/c_food.dart';
-void main() {
+Future<void> main() async   {
+ await dotenv.load(fileName: '.env');
+      
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(ContractorFood());

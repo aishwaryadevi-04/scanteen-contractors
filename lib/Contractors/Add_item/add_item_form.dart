@@ -1,9 +1,8 @@
-import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scanteen/Contractors/c_FoodList/c_food_list.dart';
+import 'package:scanteen/Contractors/Add_item/addapi.dart';
+import 'package:scanteen/Contractors/Add_item/error_popup.dart';
 import 'package:scanteen/navbar.dart';
 import 'header.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,23 +27,6 @@ class _AddItemState extends State<AddItem> {
     //Selected index in navbar
     setState(() {
       _selectedIndex = index;
-    });
-  }
-
-  void _addFoodItem() {
-    //Add food items to list
-    String foodNameValue = foodNameController.text;
-    int priceValue = int.tryParse(priceController.text) ?? 0;
-    int maxPriceValue = int.tryParse(maxPriceController.text) ?? 0;
-    setState(() {
-      Map<String, dynamic> foodItem = {
-        'f_name': foodNameValue,
-        'f_price': priceValue,
-        'f_image': image,
-        'f_maxPrice': maxPriceValue,
-      };
-      cFoodList.add(foodItem);
-      print('Added food item : $foodItem');
     });
   }
 
@@ -218,12 +200,22 @@ class _AddItemState extends State<AddItem> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () => {
-                    if (formKey.currentState!.validate())
-                      {
-                        _addFoodItem(),
-                        Navigator.of(context).pushReplacementNamed('/'),
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      final response = await addFood(
+                        foodNameController.text,
+                        priceController.text,
+                        maxPriceController.text,
+                      );
+                      if (response != "failed") {
+                        Navigator.of(context).pushReplacementNamed('/');
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) =>ErrorPopup()
+                        );
                       }
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFE09145),
@@ -232,13 +224,16 @@ class _AddItemState extends State<AddItem> {
                     ),
                     minimumSize: const Size(268, 65),
                   ),
-                  child: Text('Add item',
-                      style: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                            color: Color(0XFF17181D),
-                          ),
-                          fontSize: 16,
-                          fontWeight: FontWeight.normal)),
+                  child: Text(
+                    'Add item',
+                    style: GoogleFonts.inter(
+                      textStyle: const TextStyle(
+                        color: Color(0XFF17181D),
+                      ),
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
                 ),
               ],
             ),
