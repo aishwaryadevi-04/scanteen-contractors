@@ -13,9 +13,9 @@ class _DeleteFoodState extends State<DeleteFood> {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor:const  Color(0XFF2B2B2B),
-      content: Row(
+      content: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Text(
             'Do you want to delete?',
             style: TextStyle(

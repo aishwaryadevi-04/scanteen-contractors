@@ -41,6 +41,7 @@ class ContractorFoodState extends State<ContractorFood> {
   }
 
   String searchValue = "";
+  @override
   Widget build(BuildContext context) {
    
           return Scaffold(
@@ -61,10 +62,8 @@ class ContractorFoodState extends State<ContractorFood> {
                             setState(
                               () {
                                 searchValue = value;
-                                if (filteredFood != null) {
-                                  foodList = filteredFood;
-                                }
-                              },
+                                foodList = filteredFood;
+                                                            },
                             ),
                           },
                           style: const TextStyle(color: Color(0xFFBDBDBD)),
@@ -117,13 +116,13 @@ class ContractorFoodState extends State<ContractorFood> {
                                               BorderRadius.circular(10),
                                           color: const Color(0XFF757575),
                                         ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
+                                        child: const Padding(
+                                          padding: EdgeInsets.only(
                                               left: 60,
                                               right: 60.0,
                                               top: 0,
                                               bottom: 0),
-                                          child: Container(
+                                          child: SizedBox(
                                             width: double.infinity,
                                             height: 243.0,
                                             // child: foodImage == null

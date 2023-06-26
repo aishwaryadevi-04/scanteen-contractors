@@ -16,7 +16,7 @@ class NavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
-      child: Container(
+      child: SizedBox(
         height: 42,
         child: GNav(
           selectedIndex: selectedIndex,

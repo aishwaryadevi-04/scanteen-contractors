@@ -13,7 +13,7 @@ class _ErrorPopupState extends State<ErrorPopup> {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: const Color(0XFF2B2B2B),
-      content: Container(
+      content: SizedBox(
         height: 100,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

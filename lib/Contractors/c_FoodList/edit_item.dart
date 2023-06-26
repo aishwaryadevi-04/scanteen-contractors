@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -84,7 +83,7 @@ class _EditItemState extends State<EditItem> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(41, 0, 41, 0),
-                    child: Container(
+                    child: SizedBox(
                       height: 55.0,
                       child: TextFormField(
                         controller: foodNameController,
@@ -113,7 +112,7 @@ class _EditItemState extends State<EditItem> {
                   const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(41, 0, 41, 0),
-                    child: Container(
+                    child: SizedBox(
                       height: 55.0,
                       child: TextFormField(
                         controller: priceController,
@@ -144,7 +143,7 @@ class _EditItemState extends State<EditItem> {
                   const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(41, 0, 41, 0),
-                    child: Container(
+                    child: SizedBox(
                         height: 55.0,
                         child: Stack(
                           children: [
@@ -191,7 +190,7 @@ class _EditItemState extends State<EditItem> {
                   const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(41, 0, 41, 0),
-                    child: Container(
+                    child: SizedBox(
                       height: 55.0,
                       child: TextFormField(
                         controller: maxPriceController,

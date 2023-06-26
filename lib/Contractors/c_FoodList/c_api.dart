@@ -19,7 +19,7 @@ Future<List<dynamic>> getAllFood() async {
 
   try {
     final response =
-        await get(Uri.parse(apiUrl + '/Contractors/getAllfood'), headers: {
+        await get(Uri.parse('$apiUrl/Contractors/getAllfood'), headers: {
       'Authorization':
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250cmFjdG9ySWQiOiI2NDhkNWIzYTU3NWM1MDU0NmI0ZWQ2M2IiLCJpYXQiOjE2ODcyNDE0OTh9.HbHQHKKRJRSR-ufYfkdVFyjjLejci8SkiXMHgTrvjFw',
     });
@@ -48,7 +48,7 @@ Future<List<dynamic>> getAllFood() async {
 Future<List<dynamic>> searchFood(foodName) async {
   try {
     final response =
-        await post(Uri.parse(apiUrl + "/Contractors/searchFood"), headers: {
+        await post(Uri.parse("$apiUrl/Contractors/searchFood"), headers: {
       'Authorization':
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250cmFjdG9ySWQiOiI2NDhkNWIzYTU3NWM1MDU0NmI0ZWQ2M2IiLCJpYXQiOjE2ODcyNDE0OTh9.HbHQHKKRJRSR-ufYfkdVFyjjLejci8SkiXMHgTrvjFw',
     }, body: {
@@ -57,7 +57,7 @@ Future<List<dynamic>> searchFood(foodName) async {
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
-      print('Response body: ${responseData}');
+      print('Response body: $responseData');
       List<dynamic> filteredFood = jsonDecode(response.body);
       return filteredFood;
     } else {
@@ -74,7 +74,7 @@ Future<List<dynamic>> searchFood(foodName) async {
 Future<List<dynamic>> updateFood(foodDetails) async {
   try {
     final response = await post(
-      Uri.parse(apiUrl + '/Contractors/updateFoodDetails'),
+      Uri.parse('$apiUrl/Contractors/updateFoodDetails'),
       headers: {
         'Authorization':
             'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250cmFjdG9ySWQiOiI2NDhkNWIzYTU3NWM1MDU0NmI0ZWQ2M2IiLCJpYXQiOjE2ODcyNDE0OTh9.HbHQHKKRJRSR-ufYfkdVFyjjLejci8SkiXMHgTrvjFw',
@@ -121,7 +121,7 @@ Future<List<dynamic>> updateFood(foodDetails) async {
 Future<void> deleteFood(String id) async {
   try {
     final response = await delete(
-      Uri.parse(apiUrl + '/Contractors/deleteFood/$id'),
+      Uri.parse('$apiUrl/Contractors/deleteFood/$id'),
       headers: {
         'Authorization':
             'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250cmFjdG9ySWQiOiI2NDhkNWIzYTU3NWM1MDU0NmI0ZWQ2M2IiLCJpYXQiOjE2ODcyNDE0OTh9.HbHQHKKRJRSR-ufYfkdVFyjjLejci8SkiXMHgTrvjFw',

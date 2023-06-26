@@ -58,7 +58,7 @@ class _AddItemState extends State<AddItem> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(41, 0, 41, 0),
-                    child: Container(
+                    child: SizedBox(
                       height: 55.0,
                       child: TextFormField(
                         controller: foodNameController,
@@ -87,7 +87,7 @@ class _AddItemState extends State<AddItem> {
                   const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(41, 0, 41, 0),
-                    child: Container(
+                    child: SizedBox(
                       height: 55.0,
                       child: TextFormField(
                         controller: priceController,
@@ -118,7 +118,7 @@ class _AddItemState extends State<AddItem> {
                   const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(41, 0, 41, 0),
-                    child: Container(
+                    child: SizedBox(
                         height: 55.0,
                         child: Stack(
                           children: [
@@ -165,7 +165,7 @@ class _AddItemState extends State<AddItem> {
                   const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(41, 0, 41, 0),
-                    child: Container(
+                    child: SizedBox(
                       height: 55.0,
                       child: TextFormField(
                         controller: maxPriceController,
@@ -212,7 +212,7 @@ class _AddItemState extends State<AddItem> {
                       } else {
                         showDialog(
                           context: context,
-                          builder: (context) =>ErrorPopup()
+                          builder: (context) =>const ErrorPopup()
                         );
                       }
                     }

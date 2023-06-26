@@ -10,7 +10,7 @@ String apiUrl = dotenv.get("API_URL", fallback: "API Doesnot exist");
 Future addFood(foodName, price, maxPrice) async {
   try {
     final response =
-        await post(Uri.parse(apiUrl + "/Contractors/addFood"), headers: {
+        await post(Uri.parse("$apiUrl/Contractors/addFood"), headers: {
       'Authorization':
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250cmFjdG9ySWQiOiI2NDhkNWIzYTU3NWM1MDU0NmI0ZWQ2M2IiLCJpYXQiOjE2ODcyNDE0OTh9.HbHQHKKRJRSR-ufYfkdVFyjjLejci8SkiXMHgTrvjFw',
     }, body: {
