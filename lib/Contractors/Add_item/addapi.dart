@@ -5,14 +5,15 @@ import 'package:scanteen/Contractors/c_FoodList/c_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String apiUrl = dotenv.get("API_URL", fallback: "API Doesnot exist");
-
+String contractorToken =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250cmFjdG9ySWQiOiI2NDhkNWIzYTU3NWM1MDU0NmI0ZWQ2M2IiLCJpYXQiOjE2ODcyNDE0OTh9.HbHQHKKRJRSR-ufYfkdVFyjjLejci8SkiXMHgTrvjFw';
 //Add food by contractor
 Future addFood(foodName, price, maxPrice) async {
   try {
     final response =
         await post(Uri.parse("$apiUrl/Contractors/addFood"), headers: {
       'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250cmFjdG9ySWQiOiI2NDhkNWIzYTU3NWM1MDU0NmI0ZWQ2M2IiLCJpYXQiOjE2ODcyNDE0OTh9.HbHQHKKRJRSR-ufYfkdVFyjjLejci8SkiXMHgTrvjFw',
+          'Bearer $contractorToken',
     }, body: {
       "name": foodName.toString(),
       "price": price.toString(),

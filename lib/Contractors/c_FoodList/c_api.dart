@@ -5,6 +5,19 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String apiUrl = dotenv.get("API_URL", fallback: "API Doesnot exist");
+String contractorToken="";
+
+ Future getContractorToken() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? contractorDetails = prefs.getString('contractor details');
+  
+  if (contractorDetails != null) {
+    Map<String, dynamic> contractorData = jsonDecode(contractorDetails);
+    contractorToken = contractorData['token'];
+  }
+}
+
+
 //Get all food
 Future<List<dynamic>> getAllFood() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -20,8 +33,7 @@ Future<List<dynamic>> getAllFood() async {
   try {
     final response =
         await get(Uri.parse('$apiUrl/Contractors/getAllfood'), headers: {
-      'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250cmFjdG9ySWQiOiI2NDhkNWIzYTU3NWM1MDU0NmI0ZWQ2M2IiLCJpYXQiOjE2ODcyNDE0OTh9.HbHQHKKRJRSR-ufYfkdVFyjjLejci8SkiXMHgTrvjFw',
+      'Authorization': 'Bearer $contractorToken',
     });
 
     if (response.statusCode == 200) {
@@ -41,7 +53,7 @@ Future<List<dynamic>> getAllFood() async {
     print('Error: $error');
   }
 
-  return []; 
+  return [];
 }
 
 //Search food
@@ -49,8 +61,7 @@ Future<List<dynamic>> searchFood(foodName) async {
   try {
     final response =
         await post(Uri.parse("$apiUrl/Contractors/searchFood"), headers: {
-      'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250cmFjdG9ySWQiOiI2NDhkNWIzYTU3NWM1MDU0NmI0ZWQ2M2IiLCJpYXQiOjE2ODcyNDE0OTh9.HbHQHKKRJRSR-ufYfkdVFyjjLejci8SkiXMHgTrvjFw',
+      'Authorization': 'Bearer $contractorToken',
     }, body: {
       "foodName": foodName
     });
@@ -76,8 +87,7 @@ Future<List<dynamic>> updateFood(foodDetails) async {
     final response = await post(
       Uri.parse('$apiUrl/Contractors/updateFoodDetails'),
       headers: {
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250cmFjdG9ySWQiOiI2NDhkNWIzYTU3NWM1MDU0NmI0ZWQ2M2IiLCJpYXQiOjE2ODcyNDE0OTh9.HbHQHKKRJRSR-ufYfkdVFyjjLejci8SkiXMHgTrvjFw',
+        'Authorization': 'Bearer $contractorToken',
       },
       body: {
         "foodId": foodDetails['_id'].toString(),
@@ -96,7 +106,6 @@ Future<List<dynamic>> updateFood(foodDetails) async {
       int index = updatedFoodList
           .indexWhere((item) => item['_id'] == foodDetails['_id']);
       if (index != -1) {
-        
         updatedFoodList[index]['_id'] = responseData['foodId'];
         updatedFoodList[index]['name'] = responseData['name'];
         updatedFoodList[index]['price'] = int.tryParse(responseData['price']);
@@ -123,8 +132,7 @@ Future<void> deleteFood(String id) async {
     final response = await delete(
       Uri.parse('$apiUrl/Contractors/deleteFood/$id'),
       headers: {
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250cmFjdG9ySWQiOiI2NDhkNWIzYTU3NWM1MDU0NmI0ZWQ2M2IiLCJpYXQiOjE2ODcyNDE0OTh9.HbHQHKKRJRSR-ufYfkdVFyjjLejci8SkiXMHgTrvjFw',
+        'Authorization': 'Bearer $contractorToken',
       },
     );
 

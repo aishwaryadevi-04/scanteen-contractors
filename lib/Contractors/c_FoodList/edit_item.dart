@@ -8,9 +8,9 @@ import 'edit_header.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditItem extends StatefulWidget {
-  Map<String, dynamic> data;
+  final Map<String, dynamic> data;
 
-  EditItem({
+ const EditItem({
     Key? key,
     required this.data,
   }) : super(key: key);
@@ -229,9 +229,9 @@ class _EditItemState extends State<EditItem> {
                     if (formKey.currentState!.validate()) {
                       foodDetails['name'] = foodNameController.text;
                       foodDetails['price'] =
-                          int.parse(priceController.text) ?? 0;
+                          int.parse(priceController.text)  ;
                       foodDetails['threshold'] =
-                          int.parse(maxPriceController.text) ?? 0;
+                          int.parse(maxPriceController.text) ;
                       foodDetails['f_image'] = image;
                       await updateFood(foodDetails);
 
