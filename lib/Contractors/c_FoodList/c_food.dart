@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:scanteen/Contractors/c_FoodList/c_api.dart';
 import 'package:scanteen/Contractors/c_FoodList/delete_popup.dart';
 import 'package:scanteen/Contractors/c_FoodList/c_header.dart';
+import 'package:scanteen/Contractors/c_FoodList/loading_spinner.dart';
 import 'package:scanteen/Contractors/c_FoodList/loginapi.dart';
 import 'package:scanteen/navbar.dart';
 
@@ -15,9 +16,10 @@ class ContractorFood extends StatefulWidget {
 }
 
 class ContractorFoodState extends State<ContractorFood> {
+  bool isLoading = true;
   List<dynamic> foodList = [];
   List<dynamic> filteredFood = [];
-  bool isFetching = true;
+  
   void getDetails() async {
     await login();
     await getContractorToken();
@@ -35,7 +37,7 @@ class ContractorFoodState extends State<ContractorFood> {
     await getAllFood().then((data) {
       setState(() {
         foodList = data;
-        isFetching = false;
+        isLoading = false;
       });
     });
   }
@@ -51,6 +53,9 @@ class ContractorFoodState extends State<ContractorFood> {
   String searchValue = "";
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const LoadingPage(); 
+    }
     return Scaffold(
       backgroundColor: const Color(0xFF17181D),
       body: SingleChildScrollView(
@@ -58,7 +63,7 @@ class ContractorFoodState extends State<ContractorFood> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-             ContractorHeader(),
+            ContractorHeader(),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 26, 16, 33),
               child: Column(
@@ -69,7 +74,6 @@ class ContractorFoodState extends State<ContractorFood> {
                       setState(
                         () {
                           searchValue = value;
-                          foodList = filteredFood;
                         },
                       ),
                     },
@@ -91,9 +95,7 @@ class ContractorFoodState extends State<ContractorFood> {
               ),
             ),
             Column(
-              children: isFetching
-                  ? []
-                  : (searchValue.isNotEmpty ? filteredFood : foodList)
+              children:(searchValue.isNotEmpty ? filteredFood : foodList)
                       .map((food) {
                       String foodName = food['name'] ?? '';
                       int foodPrice = food['price'] ?? 0;
@@ -192,8 +194,6 @@ class ContractorFoodState extends State<ContractorFood> {
                                       ),
                                       GestureDetector(
                                         onTap: () async {
-                                          //Index of selected food to delete
-
                                           bool confirmed = await showDialog(
                                             context: context,
                                             barrierDismissible: false,

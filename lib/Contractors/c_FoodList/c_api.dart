@@ -5,18 +5,18 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String apiUrl = dotenv.get("API_URL", fallback: "API Doesnot exist");
-String contractorToken="";
+String contractorToken = "";
 
- Future getContractorToken() async {
+Future <String> getContractorToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? contractorDetails = prefs.getString('contractor details');
-  
+
   if (contractorDetails != null) {
     Map<String, dynamic> contractorData = jsonDecode(contractorDetails);
     contractorToken = contractorData['token'];
   }
+  return contractorToken;
 }
-
 
 //Get all food
 Future<List<dynamic>> getAllFood() async {

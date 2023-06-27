@@ -37,7 +37,7 @@ class NavBar extends StatelessWidget {
           backgroundColor: const Color(0xFF17181D),
           color: Colors.white,
           activeColor: const Color(0XFF17181D),
-          tabBackgroundColor: const Color(0xFFFCD9B8),
+          tabBackgroundColor: const Color(0xFFE09145),
           gap: 8,
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
           tabs: const [

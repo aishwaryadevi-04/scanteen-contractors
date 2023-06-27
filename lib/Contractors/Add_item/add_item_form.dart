@@ -140,7 +140,7 @@ class _AddItemState extends State<AddItem> {
                               ),
                               textInputAction: TextInputAction.next,
                               enabled:
-                                  false, // Set enabled to false to prevent manual input
+                                  false, 
                             ),
                             Positioned(
                               right: 0,
@@ -195,7 +195,7 @@ class _AddItemState extends State<AddItem> {
                 ],
               ),
             ),
-            const SizedBox(height: 131),
+            const SizedBox(height: 110),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
